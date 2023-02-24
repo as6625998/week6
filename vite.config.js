@@ -5,14 +5,13 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/week6/',
   plugins: [
     vue(),
     eslintPlugin({
       include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
     })
-
   ],
+  base: '/week6/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
