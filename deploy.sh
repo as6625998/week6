@@ -23,6 +23,6 @@ git commit -m 'deploy'
 # if you are deploying to https://as6625998.github.io
 # git push -f git@github.com:as6625998/as6625998.github.io.git main
 
-# if you are deploying to https://as6625998.github.io/vit-deploy-simple
+# if you are deploying to https://as6625998.github.io/week6
 git push -f https://github.com/as6625998/week6.git main:gh-pages
 cd -

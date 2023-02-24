@@ -34,10 +34,11 @@
             <td>
             <div class="input-group input-group-sm">
                 <div class="input-group mb-3">
-                <input min="1" type="number" class="form-control" v-model="item.qty"
-                :disabled="item.id === loadingItem"
-                @change="updataCartItem(item)">
-                <span class="input-group-text" id="basic-addon2">{{ item.product.unit }}</span>
+                  <select name="" id="" class="form-select" v-model="item.qty"
+                   :disabled="item.id===loadingItem"
+                   @change="updataCartItem (item)">
+                <option :value="i" v-for="i in 20" :key="i+12345">{{i}}</option>
+            </select>
                 </div>
             </div>
             </td>
@@ -60,7 +61,7 @@
     </tfoot>
     </table>
     <div class="my-5 row justify-content-center">
-          <v-form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder()">
+          <v-form ref="form" class="col-md-6" v-slot="{ errors }" @submit="createOrder">
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <v-field id="email" name="email" type="email" class="form-control"
@@ -144,7 +145,7 @@ export default {
       this.loadingItem = item.id
       this.$http.put(`${VITE_APP_URL}/v2/api/${VITE_APP_PATH}/cart/${item.id}`, { data })
         .then(res => {
-        // console.log("更新購物車:", res.data);
+          console.log('更新購物車:', res.data)
           this.getCarts()
           this.loadingItem = ''
         })
@@ -168,7 +169,7 @@ export default {
     }
   },
   createOrder () {
-    const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/order`
+    const url = `${VITE_APP_URL}/v2/api/${VITE_APP_PATH}/order`
     const order = this.form
     this.$http.post(url, { data: order }).then((res) => {
       alert(res.data.message)
