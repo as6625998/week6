@@ -93,7 +93,7 @@
 
             <div class="mb-3">
               <label for="message" class="form-label">留言</label>
-              <textarea id="message" class="form-control" cols="30" rows="10" v-model="message"></textarea>
+              <textarea id="message" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
             </div>
             <div class="text-end">
               <button type="submit" class="btn btn-danger"
@@ -151,11 +151,13 @@ export default {
         })
     },
     deleteItem (item) {
+      this.loadingItem = item.id
       this.$http.delete(`${VITE_APP_URL}/v2/api/${VITE_APP_PATH}/cart/${item.id}`)
         .then(res => {
-        // console.log("刪除購物車:", res.data);
+          console.log('刪除購物車:', res.data)
           alert(res.data.message)
           this.getCarts()
+          this.loadingItem = ''
         })
     },
     deleteAllCarts () {
@@ -166,18 +168,18 @@ export default {
         }).catch((err) => {
           alert(err.res.data.message)
         })
+    },
+    createOrder () {
+      const url = `${VITE_APP_URL}/v2/api/${VITE_APP_PATH}/order`
+      const order = this.form
+      this.$http.post(url, { data: order }).then((res) => {
+        alert(res.data.message)
+        this.$refs.form.resetForm()
+        this.getCarts()
+      }).catch((err) => {
+        alert(err.response.data.message)
+      })
     }
-  },
-  createOrder () {
-    const url = `${VITE_APP_URL}/v2/api/${VITE_APP_PATH}/order`
-    const order = this.form
-    this.$http.post(url, { data: order }).then((res) => {
-      alert(res.data.message)
-      this.$refs.form.resetForm()
-      this.getCarts()
-    }).catch((err) => {
-      alert(err.res.data.message)
-    })
   },
 
   mounted () {
